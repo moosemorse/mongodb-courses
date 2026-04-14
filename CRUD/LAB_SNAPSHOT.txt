@@ -1,0 +1,157 @@
+Current Mongosh Log ID: 69deae00477ee4b7ce8ce5af
+Connecting to:          mongodb://<credentials>@localhost:27017/sample_analytics?authSource=admin&directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.6.0
+Using MongoDB:          8.2.3
+Using Mongosh:          2.6.0
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+
+To help improve our products, anonymous usage data is collected and sent to MongoDB periodically (https://www.mongodb.com/legal/privacy-policy).
+You can opt-out by running the disableTelemetry() command.
+
+Enterprise sample_analytics> ...
+
+#### EXERCISE 1
+
+Enterprise sample_analytics> db.accounts.insertOne({
+...   "account_id": 111333,
+...   "limit": 12000,
+...   "products": [
+...     "Commodity",
+...     "Brokerage"
+...     ],
+...   "last_updated": new Date()
+... })
+{
+  acknowledged: true,
+  insertedId: ObjectId('69deaebe477ee4b7ce8ce5b0')
+}
+Enterprise sample_analytics>
+
+#### EXERCISE 2
+
+Enterprise sample_analytics> db.accounts.insertMany(  [
+...     {
+...       "account_id": 678943,
+...       "limit": 8000,
+...       "products": [
+...       "CurrencyService",
+...       "Brokerage",
+...       "InvestmentStock"
+...       ],
+...       "last_updated": new Date()
+...     },
+...     {
+...       "account_id": 321654,
+...       "limit": 10000,
+...       "products": [
+...       "Commodity",
+...       "CurrencyService"
+...       ],
+...       "last_updated": new Date()
+...     }
+...   ])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('69deaf4c477ee4b7ce8ce5b1'),
+    '1': ObjectId('69deaf4c477ee4b7ce8ce5b2')
+  }
+}
+
+#### EXERCISE 3
+
+Enterprise sample_analytics> db.accounts.findOne({ _id: ObjectId("5ca4bbc7a2dd94ee581623c8")})
+{
+  _id: ObjectId('5ca4bbc7a2dd94ee581623c8'),
+  account_id: 462501,
+  limit: 10000,
+  products: [ 'InvestmentFund', 'Commodity', 'InvestmentStock' ]
+}
+Enterprise sample_analytics>
+
+#### EXERCISE 4
+
+Enterprise bird_data> db.birds.findOne({common_name: 'Canada Goose'})
+{
+  _id: ObjectId('6268413c613e55b82d7065d2'),
+  common_name: 'Canada Goose',
+  scientific_name: 'Branta canadensis',
+  wingspan_cm: 152.4,
+  habitat: 'wetlands',
+  diet: [ 'grass', 'algae' ],
+  last_seen: ISODate('2022-05-19T20:20:44.083Z')
+}
+Enterprise bird_data>
+
+#### EXERCISE 5
+
+Enterprise bird_data> db.birds.updateOne({_id: ObjectId('6268413c613e55b82d7065d2')}, {$set: { tags:['geese', 'herbivore', 'migration']}}, {upsert: true})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+Enterprise bird_data>
+
+#### EXERCISE 6
+
+Enterprise bird_data> db.birds.findOne({common_name: 'Canada Goose'})
+{
+  _id: ObjectId('6268413c613e55b82d7065d2'),
+  common_name: 'Canada Goose',
+  scientific_name: 'Branta canadensis',
+  wingspan_cm: 152.4,
+  habitat: 'wetlands',
+  diet: [ 'grass', 'algae' ],
+  last_seen: ISODate('2022-05-19T20:20:44.083Z'),
+  tags: [ 'geese', 'herbivore', 'migration' ]
+}
+Enterprise bird_data>
+
+#### EXERCISE 7
+
+Enterprise bird_data> db.birds.find({ sightings_count: { $lte: 10 } })
+[
+  {
+    _id: ObjectId('6286a5612f3fa87b7d86dcd2'),
+    common_name: 'Grackle',
+    scientific_name: 'Quiscalus quiscula',
+    wingspan_cm: 28.04,
+    habitat: 'pine trees',
+    diet: [ 'insects', 'minnows', 'eggs' ],
+    sightings_count: 7,
+    last_seen: ISODate('2022-05-19T20:20:44.083Z')
+  },
+  {
+    _id: ObjectId('62cddf53c1d62bc45439bebf'),
+    common_name: 'Grey Catbird',
+    scientific_name: 'Dumetella carolinensis',
+    wingspan_cm: 26.04,
+    habitat: [ 'vegetation', 'Scrublands', 'woodlands' ],
+    diet: [ 'fruit', 'berries', 'worms' ],
+    sightings_count: 3
+  },
+  {
+    _id: ObjectId('628682d92f3fa87b7d86dcce'),
+    common_name: 'Blue Jay',
+    scientific_name: 'Cyanocitta cristata',
+    wingspan_cm: 34.17,
+    habitat: 'forests',
+    diet: [ 'vegetables', 'nuts', 'grains' ],
+    sightings_count: 4,
+    last_seen: ISODate('2022-05-19T20:20:44.083Z')
+  }
+]
+Enterprise bird_data>
+
+#### EXERCISE 8
+
+Enterprise bird_data> db.birds.deleteMany({ sightings_count : { $lte : 10 } } )
+{ acknowledged: true, deletedCount: 3 }
+
+#### EXERCISE 9
+
+db.birds.find({ sightings_count: { $lte: 10 } })
