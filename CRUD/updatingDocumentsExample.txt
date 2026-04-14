@@ -1,0 +1,30 @@
+## updating one, select field(s) to match on and then the updated fields
+
+## upsert is like a default, inserting a document if no matching documents exist
+## upsert is a field
+
+$set adds a new field and value to a document, replaces existing one
+$push adds a new element
+
+db.podcasts.updateOne(
+  {
+    _id: ObjectId("5e8f8f8f8f8f8f8f8f8f8f8"),
+  },
+
+  {
+    $set: {
+      subscribers: 98562,
+    },
+  }
+)
+
+db.podcasts.updateOne(
+  { title: "The Developer Hub" },
+  { $set: { topics: ["databases", "MongoDB"] } },
+  { upsert: true }
+  )
+
+db.podcasts.updateOne(
+  { _id: ObjectId("5e8f8f8f8f8f8f8f8f8f8f8") },
+  { $push: { hosts: "Nic Raboy" } }
+)
