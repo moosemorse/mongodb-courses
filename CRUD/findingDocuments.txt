@@ -1,0 +1,12 @@
+db.<collection>.find()
+
+## finds a document inside a collection, returns a cursor which is a pointer to the data from query
+## find() in this situation returns a cursor to all entities
+
+.find(state : "AZ") # <-- finds all entities where state is "AZ"
+
+$in operator allows us to select all values in the array that have field equal to that
+
+db.collection.find({city : { $in: ["PHOENIX", "CHICAGO"]}}) # <- `implicit`, this is just like python etc.
+
+$eq is another parameter but implicit for find
