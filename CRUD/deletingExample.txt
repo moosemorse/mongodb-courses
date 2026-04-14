@@ -1,0 +1,12 @@
+# objective is to delete a certain element, we can first find it and then delete it
+
+db.podcasts.find( {uploaded: ISODate("...")} )
+
+^^ this returns an element with its primary key _id
+we can pass this as a parameter for deleteOne
+
+we can also delete many records by using deleteMany (by passing in a field)
+
+db.podcasts.deleteOne({ _id: Objectid("6282c9862acb966e76bbf20a") })
+
+db.podcasts.deleteMany({category: “crime”})
